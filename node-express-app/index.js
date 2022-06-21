@@ -146,6 +146,18 @@ app.delete('/restaurants/:id', (req, res) => {
         if (err) throw err;
         res.send(rows)
     });
+// Coder ici la requête
+let sql_delete_employes ="DELETE FROM ?? WHERE ?? =" + id;
+// Formater la requête
+let replace = ['employes', 'restaurant_id'];
+sql2 = mysql.format(sql_delete_employes, replace);
+
+// Executer la requête
+connection.query(sql2, function (err, rows) {
+    if (err) throw err;
+    res.send(rows)
+});
+
     
  res.status(200);
  })
@@ -205,15 +217,16 @@ app.get('/restaurants/:idResto/employes/:idEmploye', (req, res) => {
     res.status(200);
 });
 
-//Method PUT pour modifier un restaurant en particulier
-app.put('/restaurants/:id', (req, res) => {
-    let id = parseInt(req.params.id);
+//Method PUT pour modifier un employe en particulier 
+app.put('/restaurants/:idResto/employes/:idEmploye', (req, res) => {
+    let idRestaurant = parseInt(req.params.idResto);
+    let id = parseInt(req.params.idEmploye);
 
     // Coder ici la requête
-    let sql_update = "UPDATE ?? SET name='" + req.body.name + "', city='" + req.body.city + "', nbcouverts='" + req.body.nbcouverts + "', terrasse='" + req.body.terrasse + "', parking='" + req.body.parking + "' WHERE ?? =" + id;
+    let sql_update = "UPDATE ?? SET first_name='" + req.body.first_name + "', last_name='" + req.body.last_name + "', hire_date='" + req.body.hire_date + "' WHERE ?? =" + id + " AND ?? =" + idRestaurant;
 
     // Formater la requête
-    let replaces = ['restaurants', 'Id'];
+    let replaces = ['employes', 'Id','restaurant_id'];
     sql = mysql.format(sql_update, replaces);
 
     // Executer la requête
@@ -224,3 +237,23 @@ app.put('/restaurants/:id', (req, res) => {
 
     res.status(200);
 })
+
+//Method DELETE pour supprimer un employe en particulier
+app.delete('/restaurants/:idResto/employes/:idEmploye', (req, res) => {
+    let idRestaurant = parseInt(req.params.idResto);
+    let id = parseInt(req.params.idResto)
+
+ // Coder ici la requête
+ let sql_delete ="DELETE FROM ?? WHERE ?? =" + id + " AND ?? =" + idRestaurant;
+    // Formater la requête
+    let replaces = ['employes', 'Id','restaurant_id'];
+    sql = mysql.format(sql_delete, replaces);
+
+    // Executer la requête
+    connection.query(sql, function (err, rows) {
+        if (err) throw err;
+        res.send(rows)
+    });
+    
+ res.status(200);
+ })
