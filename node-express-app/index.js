@@ -152,7 +152,7 @@ app.delete('/restaurants/:id', (req, res) => {
 
 //EMPLOYES
 
-//Mehtod POST pour ajouter un restaurant
+//Mehtod POST pour ajouter un employe selon le restaurant
 app.post('/restaurants/:idResto/employe', (req, res) => {
     let id = parseInt(req.params.idResto);
 
@@ -169,3 +169,58 @@ app.post('/restaurants/:idResto/employe', (req, res) => {
 
     res.status(200);
 });
+
+//Method GET pour afficher tous les employes d'un restaurant en particulier
+app.get('/restaurants/:idResto/employes', (req, res) => {
+    let id = parseInt(req.params.idResto);
+
+    let sql_template = "Select * from ?? WHERE ?? =" + id;
+    let replaces = ['employes', 'restaurant_id'];
+
+    sql = mysql.format(sql_template, replaces);
+
+    connection.query(sql, function (err, row, fields) {
+        if (err) throw err;
+        res.send(row);
+    });
+    res.status(200);
+});
+
+
+//Method GET pour afficher un employe en particulier dans un restaurant en particulier
+app.get('/restaurants/:idResto/employes/:idEmploye', (req, res) => {
+    let idRestaurant = parseInt(req.params.idResto);
+ 
+    let id = parseInt(req.params.idEmploye);
+ 
+    let sql_template = "Select * from ?? INNER JOIN ?? ON employes.restaurant_id=restaurants.Id WHERE employes.Id=" + id+ " AND restaurants.Id=" + idRestaurant;
+    let replaces = ['employes','restaurants'];
+
+    sql = mysql.format(sql_template, replaces);
+
+    connection.query(sql, function (err, row, fields) {
+        if (err) throw err;
+        res.send(row);
+    });
+    res.status(200);
+});
+
+//Method PUT pour modifier un restaurant en particulier
+app.put('/restaurants/:id', (req, res) => {
+    let id = parseInt(req.params.id);
+
+    // Coder ici la requête
+    let sql_update = "UPDATE ?? SET name='" + req.body.name + "', city='" + req.body.city + "', nbcouverts='" + req.body.nbcouverts + "', terrasse='" + req.body.terrasse + "', parking='" + req.body.parking + "' WHERE ?? =" + id;
+
+    // Formater la requête
+    let replaces = ['restaurants', 'Id'];
+    sql = mysql.format(sql_update, replaces);
+
+    // Executer la requête
+    connection.query(sql, function (err, rows) {
+        if (err) throw err;
+        res.send(rows)
+    });
+
+    res.status(200);
+})
