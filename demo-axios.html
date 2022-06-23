@@ -13,11 +13,12 @@
 <body>
     <div id="app">
         <ul>
-            <li v-for="restaurant in restaurants">{{ restaurant }}</li>
+            <li v-for="restaurant in restaurants">{{restaurant}}</li>
 
         </ul>
 
     </div>
+
     <button v-on:click="update()">Mettre à jour</button>
     <script>
         let app = new Vue({
@@ -27,8 +28,7 @@
             },
             methods: {
                 update() {
-    axios.get("http://127.0.0.1:5000/restaurants")
-    .then(res => console.log(res))
+    axios.get("http://127.0.0.1:5000/restaurants").then(res => console.log(res))
             }}
         })
  
