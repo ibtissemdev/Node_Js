@@ -1,18 +1,12 @@
-const express = require('express');
-const app = express();
+let mysql = require('mysql');
+const connection = require('connection');
+//const creation = require('create');
+const route = require('route');
 
-app.listen(5000, () => {
-    console.log('Server is listening @5000');
-});
 
-const monmodule = require('monmodule');
 
-// Middleware
-app.use(express.json());
+const connect=connection.connect();
+const app =route;
 
-app.get('/hello', function(request, response) {
-    monmodule.direBonjour();
-    monmodule.direBye()});
 
-    app.get('/restaurants', function(request, response) {
-        monmodule.connect();});
+
