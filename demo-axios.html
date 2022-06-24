@@ -13,26 +13,36 @@
 <body>
     <div id="app">
         <ul>
-            <li v-for="restaurant in restaurants">{{restaurant}}</li>
+            <li v-for="restaurant in restaurants">{{ restaurant.Id }}</li>
 
+     <li v-for="employe in employes">{{employe }}</li>
         </ul>
-
+        <button v-on:click="update()">Mettre à jour</button>
     </div>
 
-    <button v-on:click="update()">Mettre à jour</button>
-    <script>
+
+
+        <script>
         let app = new Vue({
             el: "#app",
             data: {
-                restaurants: ["Resto 1", "Resto 2", "Resto 3"]
+                restaurants: ["Resto 1", "Resto 2", "Resto 3"],
+                employes : null
             },
+         
             methods: {
-                update() {
-    axios.get("http://127.0.0.1:5000/restaurants").then(res => console.log(res))
-            }}
-        })
- 
+                update(id) {
+                    axios.get("http://127.0.0.1:5000/restaurants")
+                    .then(res => this.restaurants = res.data)
+                      .catch(error => this.restaurants = [{"name":"Erreur de chargement"}])
+                     axios.get("http://127.0.0.1:5000/restaurants/"+id+"/employes")
+                     .then(res => this.employes = res.data)
+                      .catch(error => this.employes = [{"name":"Erreur de chargement"}])
+                }
+            },
+        });
     </script>
+
 
 
 
