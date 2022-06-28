@@ -5,8 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <title>Document</title>
 </head>
 
@@ -19,34 +27,39 @@
                     <th>Id</th>
                     <th>Nom</th>
                     <th>Ville</th>
+                    <th>Equipe</th>
 
                 </tr>
             </thead>
             <tbody v-for="restaurant in restaurants">
+
                 <tr>
                     <td>
-                        {{ restaurant.Id }}
-                    </td>
-                    <td>
-                        {{ restaurant.name }}
-                        <table>
 
-                            <tr v-for="employe in employes">
-                                <td v-if="restaurant.Id==employe.restaurant_id">
-                                    {{employe}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        {{ restaurant.city }}
+                        {{ restaurant.Id }} <br>
 
                     </td>
+                    <td>
+                        {{restaurant.name}}
+                        <button v-on:click="supprimerResto(restaurant.Id)">Supprimer</button>
+                    </td>
+                    <td>
+                        {{restaurant.city}}
+                    </td>
+                    <td v-for="employe in employes">
+                        <p v-if="restaurant.Id===employe.restaurant_id"> {{employe.first_name}} <button
+                                v-on:click="supprimerEmploye(employe.Id)">Supprimer</button> </p>
+                    </td>
+
                 </tr>
-                <button v-on:click="update(restaurant.Id)">Mettre à jour</button>
+
             </tbody>
         </table>
- 
+        <span></span>
+
+
+        <button v-on:click="update()">Mettre à jour</button>
+
     </div>
 
 
@@ -54,32 +67,46 @@
     <script>
 
         // import axios from 'axios';
-        
-        let app = new Vue({
 
+        let app = new Vue({
+            //element
             el: "#app",
             data: {
-                restaurants: ["resto 1", "resto2", "resto 3"],
-                employes: ["Employe 1", "Employe 2", "Employe 3"],
-                id:["id 1", "id 2"],
+                restaurants: [{ "Id": 1, "name": "resto 1", "emp": "Employe 1" },
+                { "Id": 2, "name": "resto 2", "emp": "Employe 2" },
+                { "Id": 3, "name": "resto 3", "emp": "Employe 3" }],
+                employes: []
             },
 
 
             methods: {
-                update(Id) {
-                    console.log(Id);
+                update() {
 
                     axios.get("http://127.0.0.1:5000/restaurants")
 
                         .then(res => this.restaurants = res.data)
                         .catch(error => this.restaurants = [{ "name": "Erreur de chargement" }])
-                  
-                    axios.get("http://127.0.0.1:5000/restaurants/"+Id+"/employes" )
 
-                        .then(res => this.employes = res.data.id)
+                    axios.get("http://127.0.0.1:5000/employes")
+
+                        .then(res => this.employes = res.data)
                         .catch(error => this.employes = [{ "name": "Erreur de chargement" }])
-                }
+                },
+
+                supprimerResto(id) {
+                    console.log(id)
+                    axios.delete("http://127.0.0.1:5000/restaurants/"+id)    
+                },
+                supprimerEmploye(id_employe) {
+                    console.log(id_employe)
+                    axios.delete("http://127.0.0.1:5000/employe/"+id_employe)  
+                   
+                },
+
+
+
             },
+
         });
     </script>
 
