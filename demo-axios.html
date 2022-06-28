@@ -12,32 +12,72 @@
 
 <body>
     <div id="app">
-        <ul>
-            <li v-for="restaurant in restaurants">{{ restaurant.Id }}</li>
+        <table class="table table-bordered">
+            <caption>Restaurants</caption>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Ville</th>
 
-     <li v-for="employe in employes">{{employe }}</li>
-        </ul>
-        <button v-on:click="update()">Mettre à jour</button>
+                </tr>
+            </thead>
+            <tbody v-for="restaurant in restaurants">
+                <tr>
+                    <td>
+                        {{ restaurant.Id }}
+                    </td>
+                    <td>
+                        {{ restaurant.name }}
+                        <table>
+
+                            <tr v-for="employe in employes">
+                                <td v-if="restaurant.Id==employe.restaurant_id">
+                                    {{employe}}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        {{ restaurant.city }}
+
+                    </td>
+                </tr>
+                <button v-on:click="update(restaurant.Id)">Mettre à jour</button>
+            </tbody>
+        </table>
+ 
     </div>
 
 
 
-        <script>
+    <script>
+
+        // import axios from 'axios';
+        
         let app = new Vue({
+
             el: "#app",
             data: {
-                restaurants: ["Resto 1", "Resto 2", "Resto 3"],
-                employes : null
+                restaurants: ["resto 1", "resto2", "resto 3"],
+                employes: ["Employe 1", "Employe 2", "Employe 3"],
+                id:["id 1", "id 2"],
             },
-         
+
+
             methods: {
-                update(id) {
+                update(Id) {
+                    console.log(Id);
+
                     axios.get("http://127.0.0.1:5000/restaurants")
-                    .then(res => this.restaurants = res.data)
-                      .catch(error => this.restaurants = [{"name":"Erreur de chargement"}])
-                     axios.get("http://127.0.0.1:5000/restaurants/"+id+"/employes")
-                     .then(res => this.employes = res.data)
-                      .catch(error => this.employes = [{"name":"Erreur de chargement"}])
+
+                        .then(res => this.restaurants = res.data)
+                        .catch(error => this.restaurants = [{ "name": "Erreur de chargement" }])
+                  
+                    axios.get("http://127.0.0.1:5000/restaurants/"+Id+"/employes" )
+
+                        .then(res => this.employes = res.data.id)
+                        .catch(error => this.employes = [{ "name": "Erreur de chargement" }])
                 }
             },
         });
