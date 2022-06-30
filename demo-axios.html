@@ -20,19 +20,14 @@
 
 <body>
     <div id="app">
-        <h1>Liste des réstaurants et de leurs employés</h1>
         <table class="table table-bordered">
             <caption>Restaurants</caption>
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Nom</th>
-                    <th>Nombre de couverts</th>
-                    <th>Parking</th>
-                    <th>Terrasse</th>
                     <th>Ville</th>
                     <th>Equipe</th>
-
 
                 </tr>
             </thead>
@@ -49,22 +44,11 @@
                         <button v-on:click="supprimerResto(restaurant.Id)">Supprimer</button>
                     </td>
                     <td>
-                        {{restaurant.nbcouverts}}
-                    </td>
-                    <td>
-                        {{restaurant.parking}}
-                    </td>
-                    <td>
-                        {{restaurant.terrasse}}
-                    </td>
-                    <td>
                         {{restaurant.city}}
                     </td>
-                    <td>
-                        <span v-for="employe in employes">
-                            <p v-if="restaurant.Id===employe.restaurant_id"> {{employe.first_name}} <button
-                                    v-on:click="supprimerEmploye(employe.Id)">Supprimer</button> </p>
-                        </span>
+                    <td v-for="employe in employes">
+                        <p v-if="restaurant.Id===employe.restaurant_id"> {{employe.first_name}} <button
+                                v-on:click="supprimerEmploye(employe.Id)">Supprimer</button> </p>
                     </td>
 
                 </tr>
@@ -111,20 +95,15 @@
 
                 supprimerResto(id) {
                     console.log(id)
-                    axios.delete("http://127.0.0.1:5000/restaurants/" + id)
-                    
-                    this.update();
+                    axios.delete("http://127.0.0.1:5000/restaurants/"+id)    
                 },
                 supprimerEmploye(id_employe) {
                     console.log(id_employe)
-                    axios.delete("http://127.0.0.1:5000/employe/" + id_employe)
-                    this.update();
-
+                    axios.delete("http://127.0.0.1:5000/employe/"+id_employe)  
+                   
                 },
 
-mounted() {
-    this.update();
-}
+
 
             },
 
