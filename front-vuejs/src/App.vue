@@ -1,17 +1,15 @@
 <template>
- <div id="app">
- <Accueil />
- </div>
+  <div id="app">
+      <nav>
+        <router-link to="/">Home</router-link> |
+        <router-link to="/test">Test</router-link>
+      </nav>
+    <router-view />
+  </div>
 </template>
 
 <script>
-import Accueil from './components/Accueil.vue'
 
-export default {
- name: 'App',
- components: {
- Accueil }
-}
 </script>
 <style>
 @import '@/assets/base.css';
