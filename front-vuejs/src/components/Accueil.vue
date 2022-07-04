@@ -3,10 +3,11 @@
   <h1>Restaurants</h1>
    <div :key="index" v-for="(restaurant, index) in restaurants">
     
-		{{restaurant}} {{index}}
-    <button v-on:click="mounted()">Mettre à jour</button>
+		{{restaurant.name}} {{index}}
+  
    
    </div>
+     <button v-on:click="mounted()">Mettre à jour</button>
  </div>
 </template>
 
