@@ -1,9 +1,9 @@
 <template>
  <div class="hello">
-  <h1>Restaurants</h1>
-   <div :key="index" v-for="(restaurant, index) in restaurants">
+  <h1>Employes</h1>
+   <div :key="index" v-for="(employe, index) in employes">
     
-		{{restaurant.name}} {{index}}
+		{{employe.first_name}} {{index}}
   
    
    </div>
@@ -16,10 +16,10 @@
 import axios from "axios"
 
 export default {
- name: 'Accueil',
+ name: 'Employes',
  data(){
   return{
-   restaurants: null
+  employes: null
   }
  },
  mounted(){

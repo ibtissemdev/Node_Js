@@ -1,7 +1,7 @@
 <template>
     <main>
-      <h1>Je fais un test avec la page test</h1>
-      <Test />
+      <h1>Liste des employes</h1>
+      <Employes />
 
       
     </main>
@@ -9,12 +9,12 @@
 
 <script>
 
-import Test from '../components/Test.vue';
+import Employes from '../components/Employes.vue';
 
 export default {
-  name: 'AboutView',
+  name: 'EmployesView',
   components: {
-    Test
+   Employes
   }
 }
 </script>

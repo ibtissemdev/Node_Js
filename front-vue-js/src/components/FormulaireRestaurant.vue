@@ -1,0 +1,102 @@
+<template>
+    <div>
+
+        <h1> Ajouter un restaurant</h1>
+
+        <form id="app" @submit="checkForm" action="" >
+
+            <p v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+            <ul>
+                <li :key="index" v-for="(error, index) in errors">{{ error }}</li>
+            </ul>
+            </p>
+
+
+            <label for="name">Nom du restaurant</label>
+            <input id="name" v-model="newResto.nom" type="text" name="name"> <br>
+
+            <label for="city">Ville</label>
+            <input id="city" v-model="newResto.city" type="text" name="city" min="0">
+
+            <label for="nbcouverts">Nombre de couverts</label>
+            <input id="nbcouverts" v-model.number="newResto.nbcouverts" type="number" name="nbcouverts"><br>
+
+            <label for="terrasse">Terrasse</label>
+            <select v-model="newResto.terrasse">
+                <option :key="index" v-for="(ch, index) in choix ">{{ ch }}</option>
+
+            </select><br>
+
+            <label for="parking">Parking</label>
+            <select v-model="newResto.parking">
+                <option :key="index" v-for="(ch, index) in choix ">{{ ch }}</option>
+            </select><br>
+
+            <input type="submit"  value="Enregistrer">
+
+        </form>
+        
+
+    </div>
+</template>
+
+<script>
+// Charger la bibliothèque axios
+import axios from "axios"
+
+export default {
+    name: 'FormResto',
+
+    data() {
+        return {
+            errors: [],
+             choix: ['Oui', 'Non'],
+            newResto: {
+                nom: null,
+                city: null,
+                nbcouverts: null,
+                terrasse: null,
+                parking: null,
+            },
+        }
+    },
+
+
+    methods: {
+        checkForm: function (e) {
+                console.log(newResto.nom)
+            this.errors = [];
+
+            if (!this.newResto.nom) {
+                this.errors.push("Name required.");
+            }
+            if (!this.newResto.city) {
+                this.errors.push('city required.');
+            }
+
+            if (!this.newResto.nbcouverts) {
+                this.errors.push('couverts required.');
+            }
+            if (!this.newResto.terrasse) {
+                this.errors.push('terrasse required.');
+            }
+
+            if (!this.newResto.parking) {
+                this.errors.push('parking required.');
+            }
+
+            if (!this.errors.length) {
+                return true;
+            }
+
+            e.preventDefault();
+        }
+
+    }
+    
+}
+</script>
+
+<style>
+</style>

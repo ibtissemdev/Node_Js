@@ -1,21 +1,23 @@
 <template>
     <main>
-      <h1>Je fais un test avec la page test</h1>
-      <Test />
+     <div id="resto">
+     
+      <FormResto />
 
-      
+      </div>
     </main>
 </template>
 
 <script>
 
-import Test from '../components/Test.vue';
+import FormResto from '@/components/FormulaireRestaurant.vue';
+
 
 export default {
-  name: 'AboutView',
+  name: 'ajoutRestaurant',
   components: {
-    Test
-  }
+   FormResto
+}
 }
 </script>
 <style>

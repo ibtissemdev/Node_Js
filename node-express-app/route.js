@@ -113,7 +113,7 @@ app.delete('/restaurants/:id', (req, res) => {
     // Executer la requête
     connection.query(sql, function (err, rows) {
         if (err) throw err;
-        res.send(rows)
+       
     });
 // Coder ici la requête
 let sql_delete_employes ="DELETE FROM ?? WHERE ?? =" + id;
