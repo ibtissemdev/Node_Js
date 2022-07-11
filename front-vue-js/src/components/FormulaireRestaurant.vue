@@ -14,7 +14,7 @@
 
 
             <label for="name">Nom du restaurant</label>
-            <input id="name" v-model="newResto.nom" type="text" name="name"> <br>
+            <input id="name" v-model="newResto.name" type="text" name="name"> <br>
 
             <label for="city">Ville</label>
             <input id="city" v-model="newResto.city" type="text" name="city" min="0">
@@ -37,7 +37,7 @@
 
         </form>
         
-
+<p>{{newResto}}</p>
     </div>
 </template>
 
@@ -53,7 +53,7 @@ export default {
             errors: [],
              choix: ['Oui', 'Non'],
             newResto: {
-                nom: null,
+                name: null,
                 city: null,
                 nbcouverts: null,
                 terrasse: null,
@@ -66,9 +66,13 @@ export default {
     methods: {
         checkForm: function (e) {
                 console.log(newResto.nom)
+
+                   if (this.newResto.name && this.newResto.city && newResto.nbcouverts && this.newResto.terrasse && this.newResto.parking) {
+        return true;
+      }
             this.errors = [];
 
-            if (!this.newResto.nom) {
+            if (!this.newResto.name) {
                 this.errors.push("Name required.");
             }
             if (!this.newResto.city) {
@@ -91,6 +95,8 @@ export default {
             }
 
             e.preventDefault();
+
+              axios.post("http://127.0.0.1:5000/restaurant", this.newResto)
         }
 
     }
