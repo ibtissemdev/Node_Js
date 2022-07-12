@@ -90,10 +90,6 @@ export default {
                 this.errors.push('parking required.');
             }
 
-            if (!this.errors.length) {
-                return true;
-            }
-
             e.preventDefault();
 
               axios.post("http://127.0.0.1:5000/restaurant", this.newResto)
