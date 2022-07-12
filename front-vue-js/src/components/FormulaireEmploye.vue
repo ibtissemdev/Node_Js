@@ -3,7 +3,7 @@
 
         <h1> Ajouter un Employe</h1>
 
-        <form id="app" @submit="checkForm()">
+        <form id="app" @submit="checkForm">
 
             <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
@@ -14,13 +14,13 @@
 
 
             <label for="first_name">Prénom de l'employe</label>
-            <input id="first_name" v-model="newEmploye.first_name" type="text" name="first_name"> <br>
+            <input id="first_name" v-model="newEmploye.first_name" type="text" name="first_name"> <br><br>
 
             <label for="last_name">Nom de l'employe</label>
-            <input id="last_name" v-model="newEmploye.last_name" type="text" name="last_name"><br>
+            <input id="last_name" v-model="newEmploye.last_name" type="text" name="last_name"><br><br>
 
             <label for="hire_date">Date d'entrée</label>
-            <input id="hire_date" v-model="newEmploye.hire_date" type="date" name="hire_date"><br>
+            <input id="hire_date" v-model="newEmploye.hire_date" type="date" name="hire_date"><br><br>
 
 
            <label for="restaurant_id">Nom du restaurant</label>
@@ -31,7 +31,7 @@
 
           <!-- <p :key="index" v-for="(resto, index) in restaurants"> {{resto.name}} {{resto.Id}}</p>-->
 
-            <button type="submit">Enregistrer</button>
+              <input type="submit"  value="Enregistrer">
 
 
         </form>
@@ -67,9 +67,9 @@ export default {
     },
 
     methods: {
-        checkForm() {
+        checkForm: function() {
           
-
+console.log('salut')
             //                if (this.newResto.name && this.newResto.city && newResto.nbcouverts && this.newResto.terrasse && this.newResto.parking) {
             //     return true;
             //   }
@@ -95,7 +95,7 @@ export default {
 
             //         e.preventDefault();
 
-             axios.post("http://127.0.0.1:5000//restaurant", this.newEmploye)
+             axios.post("http://127.0.0.1:5000/restaurants/"+this.newEmploye.restaurant_id+"/employe",this.newEmploye)
         },
 
         update() {

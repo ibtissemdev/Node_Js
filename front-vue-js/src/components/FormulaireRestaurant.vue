@@ -3,9 +3,9 @@
 
         <h1> Ajouter un restaurant</h1>
 
-        <form id="app" @submit="checkForm" action="" >
+        <form id="app" @submit="checkForm" action="">
 
-            <p v-if="errors.length">
+           <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
             <ul>
                 <li :key="index" v-for="(error, index) in errors">{{ error }}</li>
@@ -33,11 +33,11 @@
                 <option :key="index" v-for="(ch, index) in choix ">{{ ch }}</option>
             </select><br>
 
-            <input type="submit"  value="Enregistrer">
+            <input type="submit" value="Enregistrer">
 
         </form>
-        
-<p>{{newResto}}</p>
+
+        <p>{{ newResto }}</p>
     </div>
 </template>
 
@@ -50,8 +50,9 @@ export default {
 
     data() {
         return {
+
             errors: [],
-             choix: ['Oui', 'Non'],
+            choix: ['Oui', 'Non'],
             newResto: {
                 name: null,
                 city: null,
@@ -64,39 +65,42 @@ export default {
 
 
     methods: {
-        checkForm: function (e) {
-                console.log(newResto.nom)
+        checkForm: function () {
+            // console.log(newResto.nom)
 
-                   if (this.newResto.name && this.newResto.city && newResto.nbcouverts && this.newResto.terrasse && this.newResto.parking) {
-        return true;
-      }
+            //                if (this.newResto.name && this.newResto.city && newResto.nbcouverts && this.newResto.terrasse && this.newResto.parking) {
+            //     return true;
+            //   }
             this.errors = [];
 
             if (!this.newResto.name) {
-                this.errors.push("Name required.");
+                this.errors.push("Veuillez saisir un nom de restaurant");
             }
             if (!this.newResto.city) {
-                this.errors.push('city required.');
+                this.errors.push('Veuillez saisir une ville');
             }
 
             if (!this.newResto.nbcouverts) {
-                this.errors.push('couverts required.');
+                this.errors.push('Veuillez saisir le nombre de couverts');
             }
             if (!this.newResto.terrasse) {
-                this.errors.push('terrasse required.');
+                this.errors.push("Veuillez sélectioner la disponibilité d'une terrasse");
             }
 
             if (!this.newResto.parking) {
-                this.errors.push('parking required.');
+                this.errors.push("Veuillez sélectioner la disponibilité d'une terrasse");
+            }
+            if (!this.errors.length) {
+                return true;
             }
 
-            e.preventDefault();
+              e.preventDefault();
 
-              axios.post("http://127.0.0.1:5000/restaurant", this.newResto)
+             axios.post("http://127.0.0.1:5000/restaurant", this.newResto)
         }
 
     }
-    
+
 }
 </script>
 
