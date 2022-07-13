@@ -3,7 +3,7 @@
 
         <h1> Ajouter un restaurant</h1>
 
-        <form id="app" @submit="checkForm" action="">
+        <form id="app" @submit.prevent="checkForm" action="">
 
            <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
@@ -14,24 +14,24 @@
 
 
             <label for="name">Nom du restaurant</label>
-            <input id="name" v-model="newResto.name" type="text" name="name"> <br>
+            <input id="name" v-model="newResto.name" type="text" name="name" > <br><br>
 
             <label for="city">Ville</label>
-            <input id="city" v-model="newResto.city" type="text" name="city" min="0">
+            <input id="city" v-model="newResto.city" type="text" name="city" min="0" ><br><br>
 
             <label for="nbcouverts">Nombre de couverts</label>
-            <input id="nbcouverts" v-model.number="newResto.nbcouverts" type="number" name="nbcouverts"><br>
+            <input id="nbcouverts" v-model.number="newResto.nbcouverts" type="number" name="nbcouverts" ><br><br>
 
             <label for="terrasse">Terrasse</label>
-            <select v-model="newResto.terrasse">
+            <select v-model="newResto.terrasse" >
                 <option :key="index" v-for="(ch, index) in choix ">{{ ch }}</option>
 
-            </select><br>
+            </select><br><br>
 
             <label for="parking">Parking</label>
-            <select v-model="newResto.parking">
+            <select v-model="newResto.parking" >
                 <option :key="index" v-for="(ch, index) in choix ">{{ ch }}</option>
-            </select><br>
+            </select><br><br>
 
             <input type="submit" value="Enregistrer">
 
@@ -44,9 +44,9 @@
 <script>
 // Charger la bibliothèque axios
 import axios from "axios"
-
+ import { required, minLength } from 'vuelidate/lib/validators'
 export default {
-    name: 'FormResto',
+     name: 'FormResto',
 
     data() {
         return {
@@ -62,17 +62,17 @@ export default {
             },
         }
     },
-
+validations: {
+    name: {
+  required,
+      minLength: minLength(6),
+    }
+  },
 
     methods: {
-        checkForm: function () {
-            // console.log(newResto.nom)
-
-            //                if (this.newResto.name && this.newResto.city && newResto.nbcouverts && this.newResto.terrasse && this.newResto.parking) {
-            //     return true;
-            //   }
-            this.errors = [];
-
+        checkForm()  {
+          
+           
             if (!this.newResto.name) {
                 this.errors.push("Veuillez saisir un nom de restaurant");
             }
@@ -90,11 +90,11 @@ export default {
             if (!this.newResto.parking) {
                 this.errors.push("Veuillez sélectioner la disponibilité d'une terrasse");
             }
-            if (!this.errors.length) {
+            if (this.errors.length) {
                 return true;
             }
 
-              e.preventDefault();
+    
 
              axios.post("http://127.0.0.1:5000/restaurant", this.newResto)
         }

@@ -3,7 +3,7 @@
 
         <h1> Ajouter un Employe</h1>
 
-        <form id="app" @submit="checkForm">
+        <form id="app" @submit.prevent="checkForm">
 
             <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
@@ -67,33 +67,27 @@ export default {
     },
 
     methods: {
-        checkForm: function() {
+        checkForm() {
           
-console.log('salut')
             //                if (this.newResto.name && this.newResto.city && newResto.nbcouverts && this.newResto.terrasse && this.newResto.parking) {
             //     return true;
             //   }
             //         this.errors = [];
 
-            //         if (!this.newResto.name) {
-            //             this.errors.push("Name required.");
-            //         }
-            //         if (!this.newResto.city) {
-            //             this.errors.push('city required.');
-            //         }
+                    if (!this.newEmploye.first_name) {
+                        this.errors.push("Veuillez saisir un prénom");
+                    } else (this.newEmploye.first_name)
+                    if (!this.newEmploye.last_name) {
+                        this.errors.push('Veuillez saisir un nom');
+                    }
 
-            //         if (!this.newResto.nbcouverts) {
-            //             this.errors.push('couverts required.');
-            //         }
-            //         if (!this.newResto.terrasse) {
-            //             this.errors.push('terrasse required.');
-            //         }
+                    if (!this.newEmploye.hire_date) {
+                        this.errors.push("Veuillez choisir une date d'entrée");
+                    }
+                    if (!this.newEmploye.restaurant_id) {
+                        this.errors.push('Veuillez choisir un restaurant');
+                    }
 
-            //         if (!this.newResto.parking) {
-            //             this.errors.push('parking required.');
-            //         }
-
-            //         e.preventDefault();
 
              axios.post("http://127.0.0.1:5000/restaurants/"+this.newEmploye.restaurant_id+"/employe",this.newEmploye)
         },

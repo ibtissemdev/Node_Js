@@ -10,7 +10,8 @@
             <span :key="index" v-for="employe, index in employes">
                 <p v-if="restaurant.Id === employe.restaurant_id"> {{ employe.first_name }} <button
                         v-on:click="supprimerEmploye(employe.Id)">Supprimer</button> </p>
-            </span>
+            </span><br>
+
         </li>
 
     </div>
